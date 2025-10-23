@@ -21,6 +21,7 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
             implementation(libs.kotlinx.datetime)
             implementation(libs.multiplatformSettings)
+            implementation(libs.androidx.datastore.core)
         }
 
         commonTest.dependencies {
@@ -29,6 +30,8 @@ kotlin {
 
         androidMain.dependencies {
             implementation(libs.kotlinx.coroutines.android)
+            implementation(libs.androidx.datastore)
+            implementation(libs.androidx.securityCrypto)
         }
 
         jvmMain.dependencies {
@@ -50,7 +53,7 @@ kotlin {
 
 android {
     namespace = "com.mandor.kmp.persistance"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 21
