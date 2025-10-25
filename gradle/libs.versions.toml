@@ -1,6 +1,6 @@
 [versions]
 
-kotlin = "2.2.0"
+kotlin = "2.2.21"
 agp = "8.10.1"
 maven-publish = "0.34.0"
 kotlinx-coroutines = "1.10.2"
@@ -24,6 +24,7 @@ multiplatformSettings = { module = "com.russhwolf:multiplatform-settings-no-arg"
 androidx-activityCompose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-datastore-core = { module = "androidx.datastore:datastore-core", version.ref = "androidx-datastore" }
 androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "androidx-datastore" }
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "androidx-datastore" }
 androidx-securityCrypto = { module = "androidx.security:security-crypto", version.ref = "androidx-securityCrypto" }
 
 [plugins]

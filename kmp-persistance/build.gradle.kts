@@ -22,6 +22,7 @@ kotlin {
             implementation(libs.kotlinx.datetime)
             implementation(libs.multiplatformSettings)
             implementation(libs.androidx.datastore.core)
+            implementation(libs.androidx.datastore.preferences)
         }
 
         commonTest.dependencies {
