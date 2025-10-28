@@ -5,10 +5,13 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import okio.Path.Companion.toPath
 
-fun createDataStore(producePath: () -> String): DataStore<Preferences> {
+fun createDataStore(
+    encrypted: Boolean = false,
+    producePath: () -> String,
+): DataStore<Preferences> {
     return PreferenceDataStoreFactory.createWithPath(
-        produceFile = { producePath().toPath()}
+        produceFile = { producePath().toPath() }
     )
 }
 
-const val DATA_STORE_FILE_NAME = "prefs.preferences_pb"
+const val DATA_STORE_DEFAULT_FILE_NAME = "prefs.preferences_pb"

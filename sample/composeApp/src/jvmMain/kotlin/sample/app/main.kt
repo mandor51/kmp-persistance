@@ -2,7 +2,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import com.mandor.kmp.persistance.DATA_STORE_FILE_NAME
+import com.mandor.kmp.persistance.DATA_STORE_DEFAULT_FILE_NAME
 import sample.app.App
 import java.awt.Dimension
 
@@ -14,9 +14,7 @@ fun main() = application {
     ) {
         window.minimumSize = Dimension(350, 600)
         App(
-            dataStore = com.mandor.kmp.persistance.createDataStore {
-                DATA_STORE_FILE_NAME
-            }
+            dataStore = com.mandor.kmp.persistance.createDataStore(encrypted = false) { DATA_STORE_DEFAULT_FILE_NAME }
         )
     }
 }
