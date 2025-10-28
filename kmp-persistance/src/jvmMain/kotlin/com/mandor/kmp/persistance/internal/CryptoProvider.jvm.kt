@@ -4,14 +4,11 @@ actual fun getCryptoProvider(): CryptoProvider {
     return JVMCryptoProvider()
 }
 
-class JVMCryptoProvider: CryptoProvider {
-    override fun encrypt(data: String): String {
-        // Implement encryption logic for JVM
-        return data.reversed() // Placeholder implementation
-    }
+class JVMCryptoProvider : CryptoProvider {
 
-    override fun decrypt(encryptedData: String): String {
-        // Implement decryption logic for JVM
-        return encryptedData.reversed() // Placeholder implementation
-    }
+    // This is mock implementation for JVM platform and to test purposes only.
+
+    override fun encrypt(data: String) = data
+
+    override fun decrypt(encryptedData: String) = encryptedData
 }
