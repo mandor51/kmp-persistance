@@ -49,7 +49,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        minSdk = 21
+        minSdk = 23
         targetSdk = 35
 
         applicationId = "sample.app.androidApp"

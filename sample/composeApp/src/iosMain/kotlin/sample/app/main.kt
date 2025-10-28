@@ -1,6 +1,6 @@
 import androidx.compose.runtime.remember
 import androidx.compose.ui.window.ComposeUIViewController
-import com.mandor.kmp.persistence.createDataStore
+import com.mandor.kmp.persistance.internal.createDataStore
 import platform.UIKit.UIViewController
 import sample.app.App
 

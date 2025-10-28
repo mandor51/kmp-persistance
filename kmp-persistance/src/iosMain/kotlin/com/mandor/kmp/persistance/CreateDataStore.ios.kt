@@ -1,9 +1,7 @@
-package com.mandor.kmp.persistence
+package com.mandor.kmp.persistance
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
-import com.mandor.kmp.persistance.DATA_STORE_DEFAULT_FILE_NAME
-import com.mandor.kmp.persistance.createDataStore
 import kotlinx.cinterop.ExperimentalForeignApi
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
