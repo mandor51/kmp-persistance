@@ -18,7 +18,6 @@ import platform.CoreFoundation.kCFBooleanTrue
 import platform.Foundation.CFBridgingRelease
 import platform.Foundation.CFBridgingRetain
 import platform.Foundation.NSData
-import platform.Foundation.base64EncodedStringWithOptions
 import platform.Foundation.create
 import platform.Security.SecItemAdd
 import platform.Security.SecItemCopyMatching
@@ -51,50 +50,37 @@ class IOSCryptoProvider : CryptoProvider {
 
 
     @OptIn(ExperimentalForeignApi::class)
-    override fun encrypt(data: String): String {
+    override fun encrypt(data: ByteArray): ByteArray {
         return try {
             val key = getOrCreateKey()
             val iv = generateIV()
-            val dataBytes = data.encodeToByteArray()
-
+            
             // Perform AES-256-GCM encryption
-            val (encrypted, tag) = encryptAES256GCM(dataBytes, key, iv)
+            val (encrypted, tag) = encryptAES256GCM(data, key, iv)
 
             // Combine IV, encrypted data, and tag for storage
-            val combined = iv + encrypted + tag
-
-            // Encode to Base64
-            combined.toNSData().base64EncodedStringWithOptions(0u)
+            iv + encrypted + tag
         } catch (e: Exception) {
             throw CryptoException("Encryption failed: ${e.message}", e)
         }
     }
 
     @OptIn(BetaInteropApi::class)
-    override fun decrypt(encryptedData: String): String {
+    override fun decrypt(encryptedData: ByteArray): ByteArray {
         return try {
             val key = getOrCreateKey()
-            val combined = NSData.create(
-                base64EncodedString = encryptedData,
-                options = 0u
-            ) ?: throw CryptoException("Failed to decode Base64 data", null)
-
-            val combinedBytes = combined.toByteArray()
-
+            
             // Extract IV, encrypted data, and authentication tag
-            if (combinedBytes.size < ivSize + tagSize) {
+            if (encryptedData.size < ivSize + tagSize) {
                 throw CryptoException("Invalid encrypted data format", null)
             }
 
-            val iv = combinedBytes.copyOfRange(0, ivSize)
-            val tag = combinedBytes.copyOfRange(combinedBytes.size - tagSize, combinedBytes.size)
-            val encryptedBytes = combinedBytes.copyOfRange(ivSize, combinedBytes.size - tagSize)
+            val iv = encryptedData.copyOfRange(0, ivSize)
+            val tag = encryptedData.copyOfRange(encryptedData.size - tagSize, encryptedData.size)
+            val encryptedBytes = encryptedData.copyOfRange(ivSize, encryptedData.size - tagSize)
 
             // Decrypt and verify
-            val decrypted = decryptAES256GCM(encryptedBytes, key, iv, tag)
-
-            decrypted.decodeToString()
-
+            return decryptAES256GCM(encryptedBytes, key, iv, tag)
         } catch (e: Exception) {
             throw CryptoException("Decryption failed: ${e.message}", e)
         }

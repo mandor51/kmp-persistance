@@ -35,6 +35,12 @@ kotlin {
             implementation(libs.androidx.securityCrypto)
         }
 
+        androidInstrumentedTest.dependencies {
+            implementation(libs.junit)
+            implementation(libs.androidx.test.junit)
+            implementation(libs.androidx.test.runner)
+        }
+
         jvmMain.dependencies {
             implementation(libs.kotlinx.coroutines.swing)
         }
@@ -58,6 +64,7 @@ android {
 
     defaultConfig {
         minSdk = 23
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 }
 

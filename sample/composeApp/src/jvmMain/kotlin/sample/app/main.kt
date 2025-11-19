@@ -1,10 +1,14 @@
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import com.mandor.kmp.persistance.DATA_STORE_DEFAULT_FILE_NAME
+import com.mandor.kmp.persistance.KmpPersistence
 import sample.app.App
+import sample.app.CounterData
 import java.awt.Dimension
+import java.io.File
 
 fun main() = application {
     Window(
@@ -13,8 +17,16 @@ fun main() = application {
         onCloseRequest = ::exitApplication,
     ) {
         window.minimumSize = Dimension(350, 600)
+        val scope = rememberCoroutineScope()
         App(
-            dataStore = com.mandor.kmp.persistance.createDataStore(encrypted = false) { DATA_STORE_DEFAULT_FILE_NAME }
+            dataStore = remember {
+                KmpPersistence.createSecureDataStore(
+                    path = { File(System.getProperty("user.home"), "counter.preferences_pb").absolutePath },
+                    serializer = CounterData.serializer(),
+                    defaultValue = CounterData(),
+                    scope = scope
+                )
+            }
         )
     }
 }

@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.compose)
     alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 kotlin {
@@ -30,6 +31,7 @@ kotlin {
             implementation(compose.foundation)
             implementation(compose.material)
             implementation(libs.androidx.datastore.preferences)
+            implementation(libs.kotlinx.serialization.json)
             implementation(project(":kmp-persistance"))
         }
 

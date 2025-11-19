@@ -14,23 +14,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @Composable
 fun App(
-    dataStore: DataStore<Preferences>
+    dataStore: DataStore<CounterData>
 ) {
 
     val counter by dataStore
         .data
-        .map {
-            val counterKey = intPreferencesKey("counter")
-            it[counterKey] ?: 0
-        }
+        .map { it.value }
         .collectAsState(initial = 0)
 
     val scope = rememberCoroutineScope()
@@ -46,9 +40,8 @@ fun App(
         Button(
             onClick = {
                 scope.launch {
-                    dataStore.edit { preferences ->
-                        val counterKey = intPreferencesKey("counter")
-                        preferences[counterKey] = counter + 1
+                    dataStore.updateData { current ->
+                        current.copy(value = current.value + 1)
                     }
                 }
             }
